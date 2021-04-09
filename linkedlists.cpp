@@ -6,13 +6,57 @@ linked_list::linked_list() {
 }
 linked_list::linked_list(const linked_list& src) {}
 
-linked_list::~linked_list() {}
+linked_list::~linked_list() {
+    
+}
 
-//Assign list to new with = operator
-linked_list & linked_list::operator =(const linked_list& rhs) {return *this;}
+//Assign list another list with = operator
+linked_list& linked_list::operator =(const linked_list& rhs) {
+    node* it = rhs.head;
+    if(head == nullptr && tail == nullptr) {
+        while(it != nullptr) {
+            push_back(it->value);
+            it = it->next;
+        }
+    }
+
+    else {
+        node* n = new node(rhs.head->value);
+        head = n;
+        node* thisIt = head;
+        while(n != nullptr) {
+            it = it->next;
+            if(it == nullptr) {
+                tail = n;
+                break;
+            }
+            n = new node(it->value);
+            thisIt->next = n;
+            thisIt = thisIt->next;
+        }
+        
+    }
+    return *this;
+}
 
 // appends elements from rhs
-linked_list & linked_list::operator +=(const linked_list& rhs) {return *this;}
+linked_list& linked_list::operator +=(const linked_list& rhs) {
+    node* it = rhs.head;
+    if(head == nullptr && tail == nullptr) {
+        *this = rhs;
+    }
+    else {
+        while(it != nullptr) {
+            node* n = new node(it->value);
+            tail->next = n;
+            n->prev = tail;
+            tail = n;
+            it = it->next;
+        }
+
+    }
+    return *this;
+}
 
 // inserting elements
 void linked_list::insert(double value, size_t pos) {
@@ -87,7 +131,23 @@ double linked_list::at(size_t pos) const {
 
 // removing elements
 void linked_list::remove(size_t pos) {
-
+    if(pos == 0) pop_front();
+    else if(pos + 1 == size()) pop_back();
+    else if(pos >= size()) std::cout << "The given position is bigger than the list size" << std::endl;
+    else {
+        node* it = head;
+        node* removedNode;
+        node* afterRemoved;
+        for(size_t i = 0; i < (pos - 1); i++) {
+            it = it->next;
+        }
+        removedNode = it->next;
+        afterRemoved = removedNode->next;
+        it->next = afterRemoved;
+        afterRemoved->prev = it;
+        removedNode->next = nullptr;
+        removedNode->prev = nullptr;
+    }
 }
 double linked_list::pop_front() {
     double removedFrontElement;
