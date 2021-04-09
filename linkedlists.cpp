@@ -1,13 +1,32 @@
+/*
+Samuel Greenberg
+09/04/2021
+Labb 2 Linked Lists
+DT019G
+*/
+
 #include "linkedlists.h"
 
 linked_list::linked_list() {
     head = nullptr;
     tail = nullptr;
 }
-linked_list::linked_list(const linked_list& src) {}
+linked_list::linked_list(const linked_list& src) {
+    *this = src;
+}
 
 linked_list::~linked_list() {
-    
+    if(size() > 0) {
+        node* n = head->next;
+        while(n != nullptr) {
+            delete[] n->prev;
+            if(n->next = nullptr) break;
+            n = n->next;
+        }
+        delete[] n;
+        head = nullptr;
+        tail = nullptr;
+    }
 }
 
 //Assign list another list with = operator
@@ -151,6 +170,11 @@ void linked_list::remove(size_t pos) {
 }
 double linked_list::pop_front() {
     double removedFrontElement;
+    if(size() == 1) {
+        head = nullptr;
+        tail = nullptr;
+        return removedFrontElement;
+    }
     node* frontPop = head;
     removedFrontElement = frontPop->value;
     head = head->next;
@@ -160,6 +184,11 @@ double linked_list::pop_front() {
     }
 double linked_list::pop_back() {
     double removedBackElement;
+    if(size() == 1) {
+        head = nullptr;
+        tail = nullptr;
+        return removedBackElement;
+    }
     node* backPop = tail;
     removedBackElement = backPop->value;
     tail = tail->prev;
@@ -207,4 +236,16 @@ linked_list::node::node(double value) {
     this->value = value;
     next = nullptr;
     prev = nullptr;
+}
+
+void pressEnterToContinue() {
+    std::cout << std::endl << "Press ENTER to continue...";
+    bool badInput = true;
+    while(badInput) {
+        if(std::cin.get() == '\n') {
+            break;
+        }
+        std::cout << "Invalid input." << std::endl;
+    }
+    std::cout << std::endl;
 }

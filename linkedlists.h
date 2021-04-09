@@ -1,3 +1,10 @@
+/*
+Samuel Greenberg
+09/04/2021
+Labb 2 Linked Lists
+DT019G
+*/
+
 #ifndef LINKEDLISTS_H
 #define LINKEDLISTS_H
 
@@ -48,5 +55,7 @@ class linked_list {
     node* head;
     node* tail;
 };
+
+void pressEnterToContinue();
 
 #endif
