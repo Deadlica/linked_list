@@ -23,14 +23,17 @@ int main() {
             list1.push_back(0);
             list2.push_back(0);
         }
-        randNum1 = (rand() % 4) + 1;
-        randNum2 = (rand() % 4) + 1;
-        list1.push_back(list1.back() + randNum1);
-        list2.push_back(list2.back() + randNum2);
+        randNum1 = list1.back() + (rand() % 5);
+        randNum2 = list2.back() + (rand() % 5);
+        list1.push_back(randNum1);
+        list2.push_back(randNum2);
     }
-    int enter;
 
-    std::cout << "DONE!" << std::endl;
+    std::cout << "DONE!" << std::endl << std::endl << "list1: ";
+    list1.print();
+    std::cout << std::endl << "list2: ";
+    list2.print();
+
     pressEnterToContinue();
     std::cout << "Checking which lists 25th element is bigger..." << std::endl;
 
@@ -49,7 +52,9 @@ int main() {
     else if(list1.at(25) == list2.at(25)) {
         std::cout << "List1's 25th element: " << list1.at(25) << std::endl
         << "List2's 25th element: " << list2.at(25) << std::endl
-        << "Both lists 25th element is the same size." << std::endl;
+        << "Both lists 25th element are the same size." << std::endl << std::endl
+        << "ABORTING PROGRAM!" << std::endl;
+        return 0;
     }
     pressEnterToContinue();
 
@@ -72,7 +77,7 @@ int main() {
 
 
     if(list1.size() == 50) {
-        std::cout << "Removing every other element from list1." << std::endl << "list1:" << std::endl;
+        std::cout << "Removing every other element from list1." << std::endl << "list1: ";
         for(size_t i = 0; i < 25; i++) {
             list1.pop_back();
             list1.push_front(list1.pop_back());
@@ -81,7 +86,7 @@ int main() {
     }
 
     else if(list2.size() == 50) {
-        std::cout << "Removing every other element from list2." << std::endl << "list2:" << std::endl;
+        std::cout << "Removing every other element from list2." << std::endl << "list2: ";
         for(size_t i = 0; i < 25; i++) {
             list2.pop_back();
             list2.push_front(list2.pop_back());
@@ -92,14 +97,15 @@ int main() {
     pressEnterToContinue();
 
     std::cout << "Merging list1, list2 into a new list called list4." << std::endl;
-    linked_list test;
     linked_list list4 = merge(list1, list2);
+    std::cout << "list4: ";
+    print_list(list4);
 
     pressEnterToContinue();
 
     std::cout << "Double checking that the merged list4 is sorted.." << std::endl;
-
-    std::cout << isSorted(list4) << std::endl;
+    if(isSorted(list4)) std::cout << "True" << std::endl;
+    else std::cout << "False" << std::endl;
 
     return 0;
 }
@@ -126,13 +132,11 @@ linked_list merge(linked_list& list1, linked_list& list2) {
             list2.pop_front();
         }
     }
-    while(!list1.is_empty()) {
-        list4.push_back(list1.front());
-        list1.pop_front();
+    if(!list1.is_empty()) {
+        list4 += list1;
     }
-    while(!list2.is_empty()) {
-        list4.push_back(list2.front());
-        list2.pop_front();
+    else if(!list2.is_empty()) {
+        list4 += list2;
     }
     return list4;
 }

@@ -180,6 +180,7 @@ double linked_list::pop_front() {
     head = head->next;
     head->prev = nullptr;
     frontPop->next = nullptr;
+    frontPop->prev = nullptr;
     return removedFrontElement;
     }
 double linked_list::pop_back() {
