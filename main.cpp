@@ -56,10 +56,11 @@ int main() {
         list2.remove(24);
     }
     else if(list1.at(24) == list2.at(24)) { //If they're the same, removes from list1so that the rest of the tests can be run
-        std::cout << "List1's 25th element: " << list1.at(25) << std::endl
-        << "List2's 25th element: " << list2.at(25) << std::endl
-        << "Both lists 25th element are the same size." << std::endl << std::endl
+        std::cout << "List1's 25th element: " << list1.at(24) << std::endl
+        << "List2's 25th element: " << list2.at(24) << std::endl
+        << "Both lists 25th element are the same size." << std::endl
         << "Removing " << list1.at(24) << " from list1." << std::endl;
+        list1.remove(24);
     }
     pressEnterToContinue();
 

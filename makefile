@@ -1,8 +1,8 @@
-program : main.cpp linked_list.cpp
+program: main.cpp linked_list.cpp
 	g++ -o main main.cpp linked_list.cpp
 
-run : main
+run: program
 	./main
 
-rm : main
+del: program
 	rm main
