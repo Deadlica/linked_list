@@ -106,8 +106,7 @@ int main() {
     //Merging list1, list2 into list4
 
     std::cout << "Merging list1, list2 into a new list called list4." << std::endl;
-    linked_list list4;
-    list4 = merge(list1, list2);
+    linked_list list4 = merge(list1, list2);
     std::cout << "list4: ";
     print_list(list4);
 

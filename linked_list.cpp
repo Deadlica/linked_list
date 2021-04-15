@@ -14,25 +14,13 @@ linked_list::linked_list() {
 }
 linked_list::linked_list(const linked_list& src) {
     //Copy constructor works the same as the '=' operator
-    node* it = src.head;
-    node* n = new node(src.head->value);
-    node* prevElement = n;
-    head = n;
-    tail = n;
-    it = it->next;
-    while(it != nullptr) {
-        n = new node(it->value);
-        prevElement->next = n;
-        n->prev = prevElement;
-        prevElement = n;
-        it = it->next;
-    }
-    tail = n;
-    tail->next = nullptr;
+    head = nullptr;
+    tail = nullptr;
+    *this = src;
 }
 
 linked_list::~linked_list() {
-    if(head != nullptr && tail != nullptr) { //List isn't empty
+    if(!is_empty()) { //List isn't empty
         node* it = head;
         while(it != nullptr) { //Iterate through each element, delete them one by one
             it = it->next;
@@ -44,7 +32,7 @@ linked_list::~linked_list() {
 linked_list& linked_list::operator=(const linked_list& rhs) {
     if(this != &rhs) { //If 'this' and 'rhs' are the same nothing needs to be done
         node* it = rhs.head;
-        if(head != nullptr && tail != nullptr) { //If list is empty, push back all of rhs element
+        if(is_empty()) { //If list is empty, push back all of rhs element
             while(it != nullptr) {
                 push_back(it->value);
                 it = it->next;
@@ -114,7 +102,7 @@ void linked_list::insert(double value, size_t pos) {
 }
 void linked_list::push_front(double value) {
     node* n = new node(value);
-    if(head != nullptr && tail != nullptr) {
+    if(!is_empty()) {
         //Connecting new node to head, when it's double linked, head is set to the new node
         n->next = head;
         head->prev = n;
@@ -128,7 +116,7 @@ void linked_list::push_front(double value) {
 }
 void linked_list::push_back(double value) {
     node* n = new node(value);
-    if(head != nullptr && tail != nullptr) {
+    if(!is_empty()) {
         //Connecting new node to tail, when it's double linked, tail is set to the new node
         n->prev = tail;
         tail->next = n;
@@ -143,7 +131,7 @@ void linked_list::push_back(double value) {
 
 //accessing elements
 double linked_list::front() const {
-    if(head != nullptr && tail != nullptr) { //List isn't empty
+    if(!is_empty()) { //List isn't empty
         double num = head->value;
         return num;
     }
@@ -152,7 +140,7 @@ double linked_list::front() const {
     }
 }
 double linked_list::back() const {
-    if(head != nullptr && tail != nullptr) { //List isn't empty
+    if(!is_empty()) { //List isn't empty
         double num = tail->value;
         return num;
     }
@@ -161,7 +149,7 @@ double linked_list::back() const {
     }
 }
 double linked_list::at(size_t pos) const {
-    if(head != nullptr && tail != nullptr) {
+    if(!is_empty()) {
         if(size() == 0) { //If the list is empty
             std::cout << "The list is empty." << std::endl;
             exit(1);
@@ -187,7 +175,7 @@ double linked_list::at(size_t pos) const {
 
 //removing elements
 void linked_list::remove(size_t pos) {
-    if(head != nullptr && tail != nullptr) {
+    if(!is_empty()) {
         if(pos == 0) { //If it's the front element
             pop_front();
         }
@@ -223,7 +211,7 @@ double linked_list::pop_front() {
         delete n;
         return removedNum;
     }
-    else if(head != nullptr && tail != nullptr) { //Create a new pointer to remove the back element and traversing head forwards once
+    else if(!is_empty()) { //Create a new pointer to remove the back element and traversing head forwards once
         removedNum = head->value;
         head = head->next;
         head->prev = nullptr;
@@ -248,7 +236,7 @@ double linked_list::pop_back() {
         delete n;
         return removedNum;
     }
-    else if(head != nullptr && tail != nullptr) { //Create a new pointer to remove the back element and traversing tail backwards once
+    else if(!is_empty()) { //Create a new pointer to remove the back element and traversing tail backwards once
         removedNum = tail->value;
         tail = tail->prev;
         tail->next = nullptr;
@@ -266,7 +254,7 @@ double linked_list::pop_back() {
 size_t linked_list::size() const {
     size_t counter = 0;
     //Each time 'it' isn't null count up by 1
-    if(head != nullptr && tail != nullptr) {
+    if(!is_empty()) {
         node* it = head;
         while(it != nullptr) {
             counter++;
@@ -288,7 +276,7 @@ bool linked_list::is_empty() const {
 void linked_list::print() const {
     //As long as list isn't empty
     //Iterate through each node and print it
-    if(head != nullptr) {
+    if(!is_empty()) {
         node* it = head;
         while(it != nullptr) {
             std::cout << it->value;
@@ -303,7 +291,7 @@ void linked_list::print() const {
 void linked_list::print_reverse() const {
     //As long as list isn't empty
     //Iterate backwards through each node and print it
-    if(head != nullptr) {
+    if(!is_empty()) {
         node* it = tail;
         while(it != nullptr) {
             std::cout << it->value;
