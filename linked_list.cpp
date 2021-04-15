@@ -14,7 +14,21 @@ linked_list::linked_list() {
 }
 linked_list::linked_list(const linked_list& src) {
     //Copy constructor works the same as the '=' operator
-    *this = src;
+    node* it = src.head;
+    node* n = new node(src.head->value);
+    node* prevElement = n;
+    head = n;
+    tail = n;
+    it = it->next;
+    while(it != nullptr) {
+        n = new node(it->value);
+        prevElement->next = n;
+        n->prev = prevElement;
+        prevElement = n;
+        it = it->next;
+    }
+    tail = n;
+    tail->next = nullptr;
 }
 
 linked_list::~linked_list() {
@@ -30,13 +44,13 @@ linked_list::~linked_list() {
 linked_list& linked_list::operator=(const linked_list& rhs) {
     if(this != &rhs) { //If 'this' and 'rhs' are the same nothing needs to be done
         node* it = rhs.head;
-        if(is_empty()) { //If list is empty, push back all of rhs element
+        if(head != nullptr && tail != nullptr) { //If list is empty, push back all of rhs element
             while(it != nullptr) {
                 push_back(it->value);
                 it = it->next;
             }
         }
-        else{ //List isn't empty
+        else { //List isn't empty
             while(!is_empty()) { //Emptying it first with pop_front
                 pop_front();
             }

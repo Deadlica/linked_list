@@ -9,12 +9,13 @@ DT109G
 #include <ctime>
 #include <cstdlib>
 
-void print_list(const linked_list& l);
+void print_list(linked_list l);
 linked_list merge(linked_list&, linked_list&);
-bool isSorted(const linked_list&);
+bool isSorted(const linked_list l);
 
 int main() {
-    linked_list list1, list2;
+    linked_list list1;
+    linked_list list2;
     srand((unsigned) time(0));
     int randNum1, randNum2;
     std::cout << "Filling list1, list2 with 50 random numbers each..." << std::endl;
@@ -156,11 +157,11 @@ linked_list merge(linked_list& list1, linked_list& list2) {
     return list4;
 }
 
-void print_list(const linked_list& l) {
+void print_list(linked_list l) {
     l.print();
 }
 
-bool isSorted(const linked_list& l) {
+bool isSorted(const linked_list l) {
     for(size_t i = 0; i < l.size(); i++) {
         if(i == l.size() - 1) { //If it's last element
             break;
