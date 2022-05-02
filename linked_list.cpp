@@ -32,24 +32,16 @@ linked_list::~linked_list() {
 linked_list& linked_list::operator=(const linked_list& rhs) {
     if(this != &rhs) { //If 'this' and 'rhs' are the same nothing needs to be done
         node* it = rhs.head;
-        if(is_empty()) { //If list is empty, push back all of rhs element
-            while(it != nullptr) {
-                push_back(it->value);
-                it = it->next;
-            }
+        while(!is_empty()) {
+            pop_front();
         }
-        else { //List isn't empty
-            while(!is_empty()) { //Emptying it first with pop_front
-                pop_front();
-            }
-            while(it != nullptr) { //Filling list with rhs element by using push_back
-                push_back(it->value);
-                it = it->next;
-            }
+        while(it != nullptr) { //Filling list with rhs element by using push_back
+            push_back(it->value);
+            it = it->next;
         }
     }
     return *this;
-    }
+}
 
 //appends elements from rhs
 linked_list& linked_list::operator+=(const linked_list& rhs) {
@@ -308,16 +300,4 @@ linked_list::node::node(double value) {
     this->value = value;
     next = nullptr;
     prev = nullptr;
-}
-
-void pressEnterToContinue() { //Wait for an 'ENTER' input from the user before continuing
-    std::cout << std::endl << "Press ENTER to continue...";
-    bool badInput = true;
-    while(badInput) {
-        if(std::cin.get() == '\n') {
-            break;
-        }
-        std::cout << "Invalid input." << std::endl;
-    }
-    std::cout << std::endl;
 }

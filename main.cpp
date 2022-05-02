@@ -5,17 +5,23 @@ Lab 2 Linked lists
 DT109G
 */
 
-#include "linked_list.h"
+#include "t_linked_list.h"
 #include <ctime>
 #include <cstdlib>
 
-void print_list(linked_list l);
-linked_list merge(linked_list&, linked_list&);
-bool isSorted(const linked_list l);
+template<typename T>
+void print_list(linked_list<T> l);
+
+template<typename T>
+linked_list<T> merge(linked_list<T>&, linked_list<T>&);
+
+template<typename T>
+bool isSorted(const linked_list<T> l);
 
 int main() {
-    linked_list list1;
-    linked_list list2;
+    
+    linked_list<int> list1;
+    linked_list<int> list2;
     srand((unsigned) time(0));
     int randNum1, randNum2;
     std::cout << "Filling list1, list2 with 50 random numbers each..." << std::endl;
@@ -39,7 +45,7 @@ int main() {
     std::cout << std::endl << "list2: ";
     list2.print();
 
-    pressEnterToContinue();
+    std::cin.get();
     std::cout << "Checking which lists 25th element is bigger..." << std::endl;
 
     //Checking the 25th element in each list and removing the bigger one
@@ -63,11 +69,11 @@ int main() {
         << "Removing " << list1.at(24) << " from list1." << std::endl;
         list1.remove(24);
     }
-    pressEnterToContinue();
+    std::cin.get();
 
     //Assigning the smaller list to the new list "list3"
 
-    linked_list list3;
+    linked_list<int> list3;
     if(list1.size() < list2.size()) {
         std::cout << "Creating 'list3' and assigning list1 to it, then printing list3 in reverse order." << std::endl;
         list3 = list1;
@@ -79,7 +85,7 @@ int main() {
 
     std::cout << "list3:" << std::endl;
     list3.print_reverse();
-    pressEnterToContinue();
+    std::cin.get();
 
     //Removing every other element in the bigger list
 
@@ -101,16 +107,16 @@ int main() {
         print_list(list2);
     }
 
-    pressEnterToContinue();
+    std::cin.get();
 
     //Merging list1, list2 into list4
 
     std::cout << "Merging list1, list2 into a new list called list4." << std::endl;
-    linked_list list4 = merge(list1, list2);
+    linked_list<int> list4 = merge(list1, list2);
     std::cout << "list4: ";
     print_list(list4);
 
-    pressEnterToContinue();
+    std::cin.get();
 
     //Checking if merged list4 is sorted correctly
 
@@ -125,8 +131,9 @@ int main() {
     return 0;
 }
 
-linked_list merge(linked_list& list1, linked_list& list2) {
-    linked_list list4;
+template<typename T>
+linked_list<T> merge(linked_list<T>& list1, linked_list<T>& list2) {
+    linked_list<T> list4;
     //Taking first element of each list and adding the smallest to list4
     while(!list1.is_empty() && !list2.is_empty()) {
         if(list1.front() < list2.front()) {
@@ -156,11 +163,13 @@ linked_list merge(linked_list& list1, linked_list& list2) {
     return list4;
 }
 
-void print_list(linked_list l) {
+template<typename T>
+void print_list(linked_list<T> l) {
     l.print();
 }
 
-bool isSorted(const linked_list l) {
+template<typename T>
+bool isSorted(const linked_list<T> l) {
     for(size_t i = 0; i < l.size(); i++) {
         if(i == l.size() - 1) { //If it's last element
             break;

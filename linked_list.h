@@ -56,6 +56,4 @@ class linked_list {
     node* tail;
 };
 
-void pressEnterToContinue();
-
 #endif
